@@ -59,6 +59,37 @@ class App extends Component {
 
   onClickAddButton = () => {
     const {inputTask, selectTag} = this.state
+    const taskName = inputTask
+    const taskCategory = selectTag
+    const id = uuid()
+    const bgColor = false
+    if (taskName.length !== 0) {
+      this.setState(prevState => ({
+        myTaskList: [
+          ...prevState.myTaskList,
+          {id, taskName, taskCategory, bgColor},
+        ],
+        inputTask: '',
+        selectTag: tagsList[0].optionId,
+      }))
+    }
+  }
+
+  onChangeInputTask = event => {
+    this.setState({inputTask: event.target.value})
+  }
+
+  onChangeSelectTag = event => {
+    this.setState({selectTag: event.target.value})
+  }
+
+  onClickTag = event => {
+    this.setState(prevState => ({
+      activeTag:
+        prevState.activeTag === event.target.value
+          ? 'INITIAL'
+          : event.target.value,
+    }))
   }
 
   render() {
