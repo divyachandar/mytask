@@ -1,16 +1,17 @@
 import {Component} from 'react'
 import {v4 as uuid} from 'uuid'
 import Tasks from './components/Tasks'
+
 import {
   MainContainer,
-  TaskContainer,
+  TaskInputContainer,
+  TaskDisplayContainer,
   Heading,
   InputContainer,
   LabelText,
   Input,
   Select,
   AddButton,
-  TaskDisplayContainer,
   TagsHeading,
   TagsContainer,
   TaskContainer,
@@ -93,15 +94,15 @@ class App extends Component {
   }
 
   render() {
-    const {myTaskList, inputTask, selectTag, selectTag} = this.state
+    const {myTaskList, inputTask, selectTag, activeTag} = this.state
     const filterTaskList =
       activeTag === 'INITIAL'
         ? myTaskList
-        : myTaskList.filter(each => eachTaskCategory === activeTag)
+        : myTaskList.filter(each => each.eachTaskCategory === activeTag)
 
     return (
       <MainContainer>
-        <TaskContainer>
+        <TaskInputContainer>
           <Heading>Create a Task</Heading>
           <InputContainer>
             <LabelText for="textInput">Task</LabelText>
@@ -126,14 +127,14 @@ class App extends Component {
           <AddButton type="button" onClick={this.onClickAddButton}>
             Add Task
           </AddButton>
-        </TaskContainer>
+        </TaskInputContainer>
         <TaskDisplayContainer>
-          <TaskHeading>Tags</TaskHeading>
+          <TagsHeading>Tags </TagsHeading>
           <TagsContainer>
             {tagsList.map(eachTag => {
-              const isActive = activeTag == eachTag.optionId
+              const isActive = activeTag === eachTag.optionId
               return (
-                <TagListItem key={eachTag.optionId}>
+                <TagsListItem key={eachTag.optionId}>
                   <TagsButton
                     type="button"
                     value={eachTag.optionId}
@@ -142,21 +143,17 @@ class App extends Component {
                   >
                     {eachTag.displayText}
                   </TagsButton>
-                </TagListItem>
+                </TagsListItem>
               )
             })}
           </TagsContainer>
-          <TaskHeading>Tasks</TaskHeading>
+          <TagsHeading>Tasks</TagsHeading>
           <TaskContainer>
-            {filterTaskList.length == 0 ? (
-              <NoTaskText>No Tasks AddedYet</NoTaskText>
+            {filterTaskList.length === 0 ? (
+              <NoTaskText>No Tasks Added Yet</NoTaskText>
             ) : (
               filterTaskList.map(eachTask => (
-                <Tasks
-                  key={eachTask.id}
-                  taskDetails={eachTask.id}
-                  taskDetails={eachTask}
-                />
+                <Tasks key={eachTask.id} taskDetails={eachTask} />
               ))
             )}
           </TaskContainer>
