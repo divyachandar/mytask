@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const TagsCategory = style.p`
+export const TagsCategory = styled.p`
 background-color:#f3aa4e;
 border:0px;
 border-radius:20px;
